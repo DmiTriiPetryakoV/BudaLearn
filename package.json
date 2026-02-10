@@ -1,0 +1,16 @@
+{
+  "name": "budalearn",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "homepage": "https://DmiTriiPetryakoV.github.io/BudaLearn/",
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "gh-pages": "^6.3.0",
+    "vite": "^5.2.0"
+  }
+}

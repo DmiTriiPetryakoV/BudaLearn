@@ -1,0 +1,27 @@
+{
+  "slug": "html-basics",
+  "title": "Основы HTML",
+  "description": "Основные теги и структура HTML документов для создания веб-страниц",
+  "difficulty": "beginner",
+  "duration": 35,
+  "time":16,
+  "theory": "## Структура HTML документа\n\n```html\n<!DOCTYPE html>\n<html lang=\"ru\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Название страницы</title>\n</head>\n<body>\n    <h1>Заголовок страницы</h1>\n    <p>Текст страницы</p>\n</body>\n</html>\n```\n\n## Основные теги\n\n### Заголовки\n```html\n<h1>Главный заголовок</h1>\n<h2>Заголовок второго уровня</h2>\n<h3>Заголовок третьего уровня</h3>\n```\n\n### Текст\n```html\n<p>Обычный параграф текста</p>\n<strong>Важный текст (жирный)</strong>\n<em>Акцентированный текст (курсив)</em>\n<span>Часть текста без семантики</span>\n```\n\n### Ссылки\n```html\n<a href=\"https://example.com\">Обычная ссылка</a>\n<a href=\"page.html\">Внутренняя ссылка</a>\n<a href=\"#section\">Якорная ссылка</a>\n<a href=\"mailto:email@example.com\">Ссылка на email</a>\n```\n\n### Изображения\n```html\n<img src=\"image.jpg\" alt=\"Описание изображения\">\n<img src=\"photo.png\" alt=\"Фотография\" width=\"400\" height=\"300\">\n```\n\n## Списки\n\n### Маркированный список\n```html\n<ul>\n    <li>Элемент списка 1</li>\n    <li>Элемент списка 2</li>\n    <li>Элемент списка 3</li>\n</ul>\n```\n\n### Нумерованный список\n```html\n<ol>\n    <li>Первый пункт</li>\n    <li>Второй пункт</li>\n    <li>Третий пункт</li>\n</ol>\n```\n\n## Формы\n\n### Простая форма\n```html\n<form action=\"/submit\" method=\"POST\">\n    <label for=\"name\">Имя:</label>\n    <input type=\"text\" id=\"name\" name=\"name\">\n    \n    <label for=\"email\">Email:</label>\n    <input type=\"email\" id=\"email\" name=\"email\">\n    \n    <button type=\"submit\">Отправить</button>\n</form>\n```\n\n### Элементы формы\n```html\n<input type=\"text\" placeholder=\"Введите текст\">\n<input type=\"password\" placeholder=\"Пароль\">\n<input type=\"email\" placeholder=\"Email\">\n<input type=\"number\" placeholder=\"Число\">\n<input type=\"date\">\n<textarea placeholder=\"Сообщение\"></textarea>\n<select>\n    <option value=\"1\">Пункт 1</option>\n    <option value=\"2\">Пункт 2</option>\n</select>\n<input type=\"checkbox\"> Чекбокс\n<input type=\"radio\"> Радиокнопка\n```\n\n## Таблицы\n\n```html\n<table>\n    <tr>\n        <th>Заголовок 1</th>\n        <th>Заголовок 2</th>\n    </tr>\n    <tr>\n        <td>Ячейка 1</td>\n        <td>Ячейка 2</td>\n    </tr>\n    <tr>\n        <td>Ячейка 3</td>\n        <td>Ячейка 4</td>\n    </tr>\n</table>\n```\n\n## Семантические теги\n\n```html\n<header>Шапка сайта</header>\n<nav>Навигационное меню</nav>\n<main>Основное содержимое</main>\n<article>Статья или пост</article>\n<section>Раздел содержимого</section>\n<aside>Боковая панель</aside>\n<footer>Подвал сайта</footer>\n```\n\n## Мета-теги\n\n```html\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <meta name=\"description\" content=\"Описание страницы\">\n    <meta name=\"keywords\" content=\"ключевые слова\">\n    <title>Заголовок страницы</title>\n</head>\n```\n\n## Мультимедиа\n\n```html\n<video controls width=\"640\">\n    <source src=\"video.mp4\" type=\"video/mp4\">\n</video>\n\n<audio controls>\n    <source src=\"audio.mp3\" type=\"audio/mpeg\">\n</audio>\n```\n\n## Комментарии\n\n```html\n<!-- Это комментарий -->\n<div>\n    <!-- Комментарий внутри элемента -->\n    <p>Текст</p>\n</div>\n```\n\n## Специальные символы\n\n```html\n&lt; <!-- Знак меньше < -->\n&gt; <!-- Знак больше > -->\n&amp; <!-- Амперсанд & -->\n&quot; <!-- Кавычка \" -->\n&copy; <!-- Знак копирайта © -->\n&nbsp; <!-- Неразрывный пробел -->\n```\n\n## Лучшие практики\n\n1. Всегда закрывайте теги\n2. Используйте семантические теги\n3. Добавляйте alt к изображениям\n4. Используйте правильную структуру заголовков\n5. Валидируйте HTML код\n6. Оптимизируйте для мобильных устройств\n7. Используйте комментарии для пояснения\n\n## Распространенные ошибки\n\n❌ `<img src=\"photo.jpg\">` - нет alt атрибута\n✅ `<img src=\"photo.jpg\" alt=\"Описание\">`\n\n❌ `<p>Текст <strong>важный</p></strong>` - неправильное закрытие\n✅ `<p>Текст <strong>важный</strong></p>`\n\n❌ `<h3>Главный заголовок</h3>` - неправильная иерархия\n✅ `<h1>Главный заголовок</h1>`\n\n## Заключение\n\nHTML - основа веб-разработки. Начните с правильной структуры документа, используйте семантические теги, всегда добавляйте alt текст к изображениям и следите за валидностью кода. Практикуйтесь, создавая простые страницы, и постепенно переходите к более сложным проектам.",
+  
+  "points": [
+    "Структура HTML документа",
+    "Основные теги: заголовки, текст, ссылки",
+    "Изображения и атрибут alt",
+    "Списки: маркированные и нумерованные",
+    "Формы и элементы ввода",
+    "Таблицы для данных",
+    "Семантические теги HTML5",
+    "Мета-теги для SEO",
+    "Мультимедиа: видео и аудио",
+    "Лучшие практики и ошибки"
+  ],
+  
+  "lesson": {
+    "slug": "html-forms",
+    "title": "HTML Формы и Валидация"
+  }
+}
