@@ -1,0 +1,40 @@
+{
+  "javascript": [
+    { "slug": "basicsJs", "title": "Основы: переменные, типы данных", "order": 1 },
+    { "slug": "operators", "title": "Операторы и условия", "order": 2 },
+    { "slug": "functions", "title": "Функции и область видимости", "order": 3 },
+    { "slug": "objects", "title": "Объекты и массивы", "order": 4 },
+    { "slug": "dom", "title": "Работа с DOM", "order": 5 },
+    { "slug": "events", "title": "События и обработчики", "order": 6 },
+    { "slug": "async", "title": "Асинхронность", "order": 7 },
+    { "slug": "api", "title": "Работа с API", "order": 8 },
+    { "slug": "es6", "title": "ES6+", "order": 9 },
+    { "slug": "classes", "title": "Классы и ООП", "order": 10 },
+    { "slug": "modules", "title": "Модули", "order": 11 },
+    { "slug": "patterns", "title": "Паттерны", "order": 12 },
+    { "slug": "frameworks", "title": "Фреймворки", "order": 13 }
+  ],
+  "html": [
+    { "slug": "html-basics", "title": "Основы HTML", "order": 1 },
+    { "slug": "tags", "title": "HTML теги и атрибуты", "order": 2 },
+    { "slug": "semantic", "title": "Семантическая разметка", "order": 3 },
+    { "slug": "forms", "title": "Формы и инпуты", "order": 4 },
+    { "slug": "tables", "title": "Таблицы", "order": 5 },
+    { "slug": "media", "title": "Мультимедиа", "order": 6 },
+    { "slug": "accessibility", "title": "Доступность", "order": 7 },
+    { "slug": "seo", "title": "HTML для SEO", "order": 8 },
+    { "slug": "html5", "title": "HTML5 API", "order": 9 }
+  ],
+  "css": [
+    { "slug": "basicsCss", "title": "Основы CSS", "order": 1 },
+    { "slug": "selectors", "title": "Селекторы", "order": 2 },
+    { "slug": "box-model", "title": "Боксовая модель", "order": 3 },
+    { "slug": "layout", "title": "Раскладка", "order": 4 },
+    { "slug": "flexbox", "title": "Flexbox", "order": 5 },
+    { "slug": "grid", "title": "CSS Grid", "order": 6 },
+    { "slug": "responsive", "title": "Адаптивный дизайн", "order": 7 },
+    { "slug": "animations", "title": "Анимации и трансформации", "order": 8 },
+    { "slug": "preprocessors", "title": "Препроцессоры", "order": 9 },
+    { "slug": "css3", "title": "CSS3", "order": 10 }
+  ]
+}
