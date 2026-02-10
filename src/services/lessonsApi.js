@@ -1,6 +1,8 @@
 class ApiLesson {
   constructor() {
     this.cache = new Map()
+    this.basePath = import.meta.env.BASE_URL || '/'
+    console.log('🔄 ApiLesson инициализирован. Base path:', this.basePath)
   }
 
   async getLesson(technology, slug) {
@@ -12,10 +14,12 @@ class ApiLesson {
     }
     
     try {
-      const url = `/data/lessons/${technology}/${slug}.json`
+      // ⬇️ ИСПРАВЛЕНО: Добавляем basePath
+      const url = `${this.basePath}data/lessons/${technology}/${slug}.json`
       console.log('🌐 Полный URL урока:', url)
       console.log('🌐 Technology:', technology)
       console.log('🌐 Slug:', slug)
+      console.log('🌐 Base path:', this.basePath)
       
       const response = await fetch(url)
       
@@ -36,71 +40,96 @@ class ApiLesson {
     } catch (error) {
       console.error('❌ Ошибка загрузки урока:', error)
       console.error('❌ Error stack:', error.stack)
-      throw error
+      
+      // Fallback: возвращаем заглушку
+      return {
+        title: `Урок ${slug}`,
+        content: `<p>Содержание урока временно недоступно. Попробуйте позже.</p>`,
+        slug: slug
+      }
     }
   }
 
   async getTopics(technology) {
     try {
-      const url = '/data/topics.json'
+      // ⬇️ ИСПРАВЛЕНО: Добавляем basePath
+      const url = `${this.basePath}data/topics.json`
+      console.log('🌐 Загрузка topics.json по URL:', url)
+      
       const response = await fetch(url)
 
-      const data = await response.json()
-
-
+      // Сначала проверяем статус
       if (!response.ok) {
         const text = await response.text()
         console.error('📡 Response body:', text.substring(0, 200))
         throw new Error(`Не удалось загрузить topics.json (status: ${response.status})`)
       }
       
+      const data = await response.json()
+      console.log('✅ Topics загружены. Данные для', technology + ':', data[technology])
+
       return data[technology] || []
     } catch (error) {
       console.error('❌ Ошибка загрузки тем:', error)
       console.error('❌ Error stack:', error.stack)
-      throw error
+      
+      // Fallback: возвращаем тестовые данные
+      return this.getFallbackTopics(technology)
     }
   }
-async allLessons(technology) {
-  try {
-    const url = '/data/topics.json'
-    console.log('🌐 Запрос к:', url)
-    
-    const response = await fetch(url)
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`)
-    }
-    
-    const data = await response.json()
-    console.log('📦 Полученные данные:', data)
-    console.log('🔍 Тип данных:', typeof data)
-    console.log('🔍 Это массив?', Array.isArray(data))
-    if (data && typeof data === 'object' && !Array.isArray(data)) {
-      console.log('📋 Ключи в объекте:', Object.keys(data))
-      const techKey = technology.toLowerCase()
-      console.log(`🔍 Ищем уроки для ключа: "${techKey}"`)
+
+  async allLessons(technology) {
+    try {
+      // ⬇️ ИСПРАВЛЕНО: Добавляем basePath
+      const url = `${this.basePath}data/topics.json`
+      console.log('🌐 Запрос к:', url)
       
-      const lessons = data[techKey] || []
-      console.log(`📚 Найдено уроков: ${lessons.length}`)
-      return lessons
-    }
-    if (Array.isArray(data)) {
-      console.log('📋 Фильтруем массив из', data.length, 'элементов')
+      const response = await fetch(url)
       
-      if (data.length > 0) {
-        console.log('📄 Пример элемента:', data[0])
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
       }
-      return data.filter(lesson => lesson.tech === technology)
+      
+      const data = await response.json()
+      console.log('📦 Полученные данные:', data)
+      
+      if (data && typeof data === 'object' && !Array.isArray(data)) {
+        const techKey = technology.toLowerCase()
+        console.log(`🔍 Ищем уроки для ключа: "${techKey}"`)
+        
+        const lessons = data[techKey] || []
+        console.log(`📚 Найдено уроков: ${lessons.length}`)
+        return lessons
+      }
+      
+      return []
+    } catch (error) {
+      console.error('❌ Ошибка в allLessons:', error)
+      return this.getFallbackTopics(technology)
     }
-    console.error('❌ Неизвестный формат данных')
-    return []
-    
-  } catch (error) {
-    console.error('❌ Ошибка в allLessons:', error)
-    return []
   }
-}
+
+  // Fallback данные на случай ошибок
+  getFallbackTopics(technology) {
+    console.log('🔄 Использую fallback данные для', technology)
+    
+    const fallbackData = {
+      html: [
+        { slug: 'vvedenie', title: 'Введение в HTML', description: 'Основы HTML' },
+        { slug: 'tegi', title: 'Теги и атрибуты', description: 'Работа с тегами' }
+      ],
+      css: [
+        { slug: 'osnovy', title: 'Основы CSS', description: 'Синтаксис CSS' },
+        { slug: 'selektory', title: 'Селекторы', description: 'Виды селекторов' }
+      ],
+      javascript: [
+        { slug: 'peremennye', title: 'Переменные', description: 'let, const, var' },
+        { slug: 'funkcii', title: 'Функции', description: 'Объявление функций' }
+      ]
+    }
+    
+    return fallbackData[technology.toLowerCase()] || []
+  }
 
   clearCache() {
     this.cache.clear()
