@@ -1,50 +1,72 @@
 class ApiLesson {
   constructor() {
     this.cache = new Map()
-    this.basePath = import.meta.env.BASE_URL || '/'
-    console.log('🔄 ApiLesson инициализирован. Base path:', this.basePath)
+    
+    // Определяем автоматически
+    this.basePath = this.detectBasePath()
+    console.log('📍 Base path:', this.basePath, '(is GitHub:', this.isGitHubPages(), ')')
+  }
+
+  isGitHubPages() {
+    return window.location.hostname.includes('github.io')
+  }
+
+  detectBasePath() {
+    // Если на GitHub Pages
+    if (this.isGitHubPages()) {
+      // Извлекаем имя репозитория из пути
+      const path = window.location.pathname
+      // Пример: /BudaLearn/ → /BudaLearn/
+      const match = path.match(/^\/([^\/]+)\//)
+      return match ? `/${match[1]}/` : '/BudaLearn/'
+    }
+    // Для localhost используем import.meta.env.BASE_URL
+    return import.meta.env.BASE_URL || '/'
   }
 
   async getLesson(technology, slug) {
     const cacheKey = `${technology}/${slug}`
     
     if (this.cache.has(cacheKey)) {
-      console.log('📦 Из кэша:', cacheKey)
       return this.cache.get(cacheKey)
     }
     
     try {
-      // ⬇️ ИСПРАВЛЕНО: Добавляем basePath
-      const url = `${this.basePath}data/lessons/${technology}/${slug}.json`
-      console.log('🌐 Полный URL урока:', url)
-      console.log('🌐 Technology:', technology)
-      console.log('🌐 Slug:', slug)
-      console.log('🌐 Base path:', this.basePath)
+      const tech = technology.toLowerCase()
+      const url = `${this.basePath}data/lessons/${tech}/${slug}.json`
+      
+      console.log('🌐 Fetch:', url, '(GitHub:', this.isGitHubPages(), ')')
       
       const response = await fetch(url)
       
-      console.log('📡 Response status:', response.status)
-      console.log('📡 Response ok:', response.ok)
-      
       if (!response.ok) {
-        const text = await response.text()
-        console.error('📡 Response body:', text)
-        throw new Error(`Урок не найден: ${slug} (status: ${response.status})`)
+        throw new Error(`HTTP ${response.status} for ${url}`)
       }
       
       const data = await response.json()
       this.cache.set(cacheKey, data)
-      
-      console.log('✅ Урок загружен:', data.title)
       return data
-    } catch (error) {
-      console.error('❌ Ошибка загрузки урока:', error)
-      console.error('❌ Error stack:', error.stack)
       
-      // Fallback: возвращаем заглушку
+    } catch (error) {
+      console.error('❌ Fetch failed:', technology, slug, error.message)
+      
+      // Fallback для GitHub Pages
+      if (this.isGitHubPages()) {
+        const fallbackUrl = `/BudaLearn/data/lessons/${technology}/${slug}.json`
+        console.log('🔄 Trying fallback URL:', fallbackUrl)
+        try {
+          const response = await fetch(fallbackUrl)
+          if (response.ok) {
+            return await response.json()
+          }
+        } catch (e) {
+          console.error('❌ Fallback also failed')
+        }
+      }
+      
       return {
         title: `Урок ${slug}`,
-        content: `<p>Содержание урока временно недоступно. Попробуйте позже.</p>`,
+        content: `<p>Урок временно недоступен</p>`,
         slug: slug
       }
     }
@@ -52,88 +74,32 @@ class ApiLesson {
 
   async getTopics(technology) {
     try {
-      // ⬇️ ИСПРАВЛЕНО: Добавляем basePath
       const url = `${this.basePath}data/topics.json`
-      console.log('🌐 Загрузка topics.json по URL:', url)
-      
-      const response = await fetch(url)
-
-      // Сначала проверяем статус
-      if (!response.ok) {
-        const text = await response.text()
-        console.error('📡 Response body:', text.substring(0, 200))
-        throw new Error(`Не удалось загрузить topics.json (status: ${response.status})`)
-      }
-      
-      const data = await response.json()
-      console.log('✅ Topics загружены. Данные для', technology + ':', data[technology])
-
-      return data[technology] || []
-    } catch (error) {
-      console.error('❌ Ошибка загрузки тем:', error)
-      console.error('❌ Error stack:', error.stack)
-      
-      // Fallback: возвращаем тестовые данные
-      return this.getFallbackTopics(technology)
-    }
-  }
-
-  async allLessons(technology) {
-    try {
-      // ⬇️ ИСПРАВЛЕНО: Добавляем basePath
-      const url = `${this.basePath}data/topics.json`
-      console.log('🌐 Запрос к:', url)
+      console.log('📋 Loading topics from:', url)
       
       const response = await fetch(url)
       
       if (!response.ok) {
+        // Fallback для GitHub Pages
+        if (this.isGitHubPages()) {
+          const fallbackUrl = `/BudaLearn/data/topics.json`
+          console.log('🔄 Trying fallback topics URL:', fallbackUrl)
+          const fallbackResponse = await fetch(fallbackUrl)
+          if (fallbackResponse.ok) {
+            const data = await fallbackResponse.json()
+            return data[technology.toLowerCase()] || []
+          }
+        }
         throw new Error(`HTTP ${response.status}`)
       }
       
       const data = await response.json()
-      console.log('📦 Полученные данные:', data)
+      return data[technology.toLowerCase()] || []
       
-      if (data && typeof data === 'object' && !Array.isArray(data)) {
-        const techKey = technology.toLowerCase()
-        console.log(`🔍 Ищем уроки для ключа: "${techKey}"`)
-        
-        const lessons = data[techKey] || []
-        console.log(`📚 Найдено уроков: ${lessons.length}`)
-        return lessons
-      }
-      
-      return []
     } catch (error) {
-      console.error('❌ Ошибка в allLessons:', error)
-      return this.getFallbackTopics(technology)
+      console.error('❌ Topics error:', error)
+      return []
     }
-  }
-
-  // Fallback данные на случай ошибок
-  getFallbackTopics(technology) {
-    console.log('🔄 Использую fallback данные для', technology)
-    
-    const fallbackData = {
-      html: [
-        { slug: 'vvedenie', title: 'Введение в HTML', description: 'Основы HTML' },
-        { slug: 'tegi', title: 'Теги и атрибуты', description: 'Работа с тегами' }
-      ],
-      css: [
-        { slug: 'osnovy', title: 'Основы CSS', description: 'Синтаксис CSS' },
-        { slug: 'selektory', title: 'Селекторы', description: 'Виды селекторов' }
-      ],
-      javascript: [
-        { slug: 'peremennye', title: 'Переменные', description: 'let, const, var' },
-        { slug: 'funkcii', title: 'Функции', description: 'Объявление функций' }
-      ]
-    }
-    
-    return fallbackData[technology.toLowerCase()] || []
-  }
-
-  clearCache() {
-    this.cache.clear()
-    console.log('🗑️ Кэш очищен')
   }
 }
 
