@@ -58,13 +58,13 @@ const emit = defineEmits(['toggle'])
 
 
 <style scoped>
-/* В компоненте Header или в общих стилях */
+
 .main-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 4rem; /* Соответствует grid-template-rows: 4rem */
+  height: 4rem; 
   background: var(--Surface);
   display: flex;
   justify-content: space-between;
@@ -134,6 +134,7 @@ const emit = defineEmits(['toggle'])
   text-decoration: none;
   display: inline-flex;
   outline: none;
+  margin:1rem;
 }
 
 .burger-btn:hover {
@@ -216,19 +217,19 @@ const emit = defineEmits(['toggle'])
 
 
 }
-@media(max-width:396px){
+@media(max-width:456px){
     .name-product{
     color:var(--Text);
     font-size:1.35rem;
     padding:0.7rem;
 }
-.link{
-    min-width:5rem;
-    padding:0.55rem;
-    font-size:0.8rem;
+.burger-btn{
+  margin:0;
 }
-
-
+.box-nav{
+  margin:0;
+  padding-right:0.8rem;
+}
 }
 @media(max-width:376px){
     .name-product{
@@ -236,13 +237,6 @@ const emit = defineEmits(['toggle'])
     font-size:1.3rem;
     padding:0.5rem;
 }
-.link{
-    min-width:4.8rem;
-    padding:0.5rem;
-    font-size:0.75rem;
-}
-
-
 }
 
 </style>

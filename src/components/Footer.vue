@@ -20,10 +20,10 @@
         </div>
         <div class="footer-info">
             <p class="support-message">{{ message }}</p>
-            <p class="copyright">{{ flag }}</p>
+            <p class="copyright">{{ flag }} {{author}}</p>
 
-            <p class="info">Version {{version}}</p>
-            <p class="info">Next Update : {{data}}</p>
+            <p class="info">Version: {{version}}</p>
+            <p class="info">Next Update: {{data}}</p>
         </div>
     </footer>
 </template>
@@ -33,8 +33,9 @@ import { ref } from "vue"
 
 const message = ref('Поддержите автора сайта, перейдя по ссылкам выше')
 const year = new Date().getFullYear()
-const flag = ref(`© ${year} BudaLearn. Author: Buda`)
-const version = ref(1 + '.' +1 + '.' +1)
+const author = ref('Buda')
+const flag = ref(`© ${year} BudaLearn. Author:`)
+const version = ref('Beta Test')
 const data = ref('1.03.2026')
 
 </script>
@@ -125,6 +126,12 @@ const data = ref('1.03.2026')
     opacity: 0.8;
     margin: 0;
 }
+.copyright:hover {
+    font-size: 0.95rem;
+    opacity:1;
+    margin: 0;
+}
+
 
 /* Медиа-запросы для адаптивности */
 @media (max-width: 992px) {

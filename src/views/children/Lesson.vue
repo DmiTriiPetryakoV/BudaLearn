@@ -9,6 +9,7 @@
       <button @click="GetInfo">Попробовать снова</button>
     </div>
     <div v-else-if="data" class="box-info">
+      <h1>Изучаем:{{technology}}</h1>
       <div class="title-box">
         <h2>{{ data.title }} </h2>
         <li class="far fa-clock"></li> {{data.time}} минут
@@ -33,6 +34,7 @@
         </button>
         <button class="btn-back" id="next-theme" 
                 @click="goToNextLesson()" 
+              
                 :disabled="!nextLesson">
           Следующая Тема
         </button>
@@ -48,6 +50,10 @@
 import { ref, onMounted, watch, computed, onUnmounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { lessonsApi } from '../../services/lessonsApi'
+import { useNameTechnology } from '/src/store/nameTechnology'
+
+
+
 
 const route = useRoute()
 const router = useRouter()
@@ -83,7 +89,7 @@ async function GetInfo() {
   data.value = null
   
   try {
-    const slug = route.path.split('/').pop() || route.params.slug
+    const slug = route.path.split('/').pop() 
     
     if (!slug) {
       throw new Error(`Урок не найден: ${slug}`)
@@ -107,7 +113,7 @@ async function GetInfo() {
 
 async function nextLessons(technology, currentSlug) {
   try {
-    const allLesson = await lessonsApi.allLessons(technology)
+    const allLesson = await lessonsApi.getTopics(technology)
     const currentIndex = allLesson.findIndex(lesson => lesson.slug === currentSlug)
     
     if (currentIndex !== -1 && currentIndex < allLesson.length - 1) {
@@ -191,18 +197,21 @@ watch(() => route.path, () => {
 
 <style scoped>
 .lesson-container {
-  min-width:65vw;
-  max-width: 100vw;
+  min-width:60vw;
+  max-width:65vw;
   margin: 0 auto;
   padding: 1.25rem;
   background: var(--Background);
   min-height: 100vh;
   height: auto;
   display: flex;
+  justify-content:center;
+  align-items:center;
   flex-direction: column;
   overflow-x: hidden;
   box-sizing: border-box;
   color: var(--Text);
+  text-align:center;
 }
 
 .box-info {
@@ -602,9 +611,53 @@ watch(() => route.path, () => {
 @media (max-width: 768px) {
   .lesson-container {
     padding: 0.75rem;
-    min-width:85vw;
+    min-width:90vw;
+    max-width:80vw !important;
   }
   
+  .title-box h2 {
+    font-size: 1.5rem;
+  }
+  .btn-heigth{
+    padding:1.2rem;
+    width:3.8rem;
+    right:5px;
+  }
+  .theory-h1 {
+    font-size: 1.4rem;
+  }
+  
+  .theory-h2 {
+    font-size: 1.2rem;
+  }
+  
+  .theory-h3 {
+    font-size: 1.05rem;
+  }
+  
+  .lesson-content ul {
+    grid-template-columns: 1fr;
+  }
+  
+  .box-btn {
+    grid-template-columns: 1fr;
+  }
+  
+  .btn-back {
+    width: 100%;
+  }
+  
+  .code-block {
+    padding: 0.75rem;
+    font-size: 0.85em;
+  }
+}
+@media (max-width: 378px) {
+  .lesson-container {
+    padding: 0.75rem;
+    min-width: 90vw;
+    max-width: 95vw !important; 
+  }
   .title-box h2 {
     font-size: 1.5rem;
   }

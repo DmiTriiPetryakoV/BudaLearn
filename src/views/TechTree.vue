@@ -11,16 +11,13 @@
         <button @click="loadTopics">Попробовать снова</button>
       </div>
       
-      <template v-if="goga">
+      <template v-else>
         <template v-for="(topic, index) in topics" :key="topic.slug">
           <ButtonMain @click="theme(topic.slug)">
             {{ topic.title }}
           </ButtonMain>
           <div v-if="index < topics.length - 1" class="arrow">↓</div>
         </template>
-      </template>
-      <template v-else>
-        <router-view></router-view>
       </template>
     </div>
   </div>
@@ -55,7 +52,7 @@ const props = defineProps({
   }
 })
 
-const goga = ref(true)
+
 const loadTopics = async () => {
   console.log('🔄 Начинаю загрузку тем...')
   loading.value = true
@@ -83,15 +80,6 @@ watch(() => props.techSlug, (newTech, oldTech) => {
     loadTopics()
   }
 }) 
-watch(() => route.params.slug, (newSlug, oldSlug) => {
-  console.log('🔍 Slug изменился:', oldSlug, '→', newSlug)
-  if (newSlug) {
-    goga.value = false
-  } else {
-    goga.value = true
-  }
-}, { immediate: true })
-
 onMounted(() => {
   console.log('📌 Компонент смонтирован, загружаю темы...')
   loadTopics()
@@ -164,7 +152,7 @@ onMounted(() => {
 }
 @media(max-width:768px){
     .box-button{
-      width: 100%;
+      width: 90%;
       height: auto;
       display: grid;
       justify-content: center;

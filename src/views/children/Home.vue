@@ -151,7 +151,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-
+import api from '@/api'
 const name = ref('BudaLearn')
 const message = ref('Добро пожаловать в ')
 const floatingElements = ref([])
@@ -214,9 +214,24 @@ const scrollToTop = () => {
   })
 }
 
+
+const server = ref('time message backend')
+
+const testBackend = async() => {
+  try{
+    const response = await api.get('/test')
+    server.value = response.data.message
+    console.log('hello world')
+  }catch(error){
+    console.log(error)
+  }
+}
+
+
 onMounted(() => {
   createFloatingElements()
   createTechElements()
+    testBackend()
 })
 </script>
 
@@ -268,7 +283,7 @@ onMounted(() => {
     transform: translateY(0) rotate(0deg); 
   }
   50% { 
-    transform: translateY(-30px) rotate(5deg); 
+    transform: translateY(-40px) rotate(50deg); 
   }
 }
 
@@ -416,8 +431,8 @@ onMounted(() => {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
   50% {
-    transform: translateY(-15px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-25px);
+    box-shadow: 0 10px 20px var(--Background);
   }
 }
 

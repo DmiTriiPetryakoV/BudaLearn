@@ -4,7 +4,7 @@
     <div class="menu-content">
       <nav class="nav-box">
         <router-link 
-          v-for="tech in technologies" 
+          v-for="tech in links" 
           :key="tech.id"
           :to="tech.route"
           @click="handleNavigation(tech)"
@@ -12,17 +12,7 @@
         >
           {{ tech.name }}
         </router-link>
-               <router-link to="/"  class="menu-link">Home</router-link>
-        <button class="menu-link"  @click="showModal()" >
-          Прогресс
-        </button>
-        
-        <button class="menu-link" @click="showModal()" >
-          Закладки
-        </button>
-          <button  @click="showModal()" class="menu-link">
-          Профиль
-          </button>
+
 
       </nav>
           <div class="modal" :class="{modalVise :visible}">
@@ -46,10 +36,17 @@ const router = useRouter()
 const menuStore = useMenu()
 const techStore = useNameTechnology()
 
-const technologies = [
+
+
+
+const links = [
   { id: 'html', name: 'HTML', route: '/html' },
   { id: 'css', name: 'CSS', route: '/css' },
   { id: 'js', name: 'JavaScript', route: '/javascript' },
+   { id: 'Home', name: 'Home', route: '/' },
+  { id: 'Закладки', name: 'Закладки', route: '/fake' },
+   { id: 'Profile', name: 'Профиль', route: '/fake' },
+      { id: 'Page', name: 'О нас', route: '/fake' },
 
 ]
 
