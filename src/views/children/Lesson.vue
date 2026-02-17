@@ -611,8 +611,7 @@ watch(() => route.path, () => {
 @media (max-width: 768px) {
   .lesson-container {
     padding: 0.75rem;
-    min-width:90vw;
-    max-width:80vw !important;
+    max-width:90vw !important;
   }
   
   .title-box h2 {

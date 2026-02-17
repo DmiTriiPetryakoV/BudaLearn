@@ -54,6 +54,12 @@
   --Transition-Fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --Transition-Normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --Transition-Slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Safe Area Insets для iPhone с вырезом */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
 }
 
 .light-theme {
@@ -94,7 +100,14 @@
   --Elevation-1: 0 1px 2px rgba(0, 0, 0, 0.05);
   --Elevation-2: 0 4px 12px rgba(0, 0, 0, 0.08);
   --Elevation-3: 0 12px 24px rgba(0, 0, 0, 0.12);
+  
+  /* Safe Area Insets для iPhone с вырезом */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
 }
+
 body , html{
   width:100%;
   height:100%;
@@ -103,5 +116,150 @@ body , html{
   font-family: 'Inter', sans-serif;
   
   transition:all 0.3s ease;
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
+  
+  /* Добавляем паддинги для безопасной области на iPhone */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  
+  /* Обеспечиваем, что контент не будет перекрываться системными элементами */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+/* Для iOS Safari - предотвращаем прыжки при изменении высоты адресной строки */
+body {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* Скрываем полосу прокрутки на iOS */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Для вьюпорта с безопасной областью */
+@supports (padding: max(0px)) {
+  body {
+    padding-top: max(env(safe-area-inset-top, 0px), 0px);
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 0px);
+    padding-left: max(env(safe-area-inset-left, 0px), 0px);
+    padding-right: max(env(safe-area-inset-right, 0px), 0px);
+  }
+}
+
+/* Для устройств с Dynamic Island (iPhone 14 Pro и новее) */
+@supports (padding: env(safe-area-inset-top)) {
+  :root {
+    --dynamic-island-height: env(safe-area-inset-top);
+  }
+}
+
+/* Медиа-запросы для оптимизации под мобильные устройства */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  /* Специфичные стили для Safari */
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Для устройств с маленьким экраном */
+@media (max-width: 480px) {
+  html, body {
+    /* Увеличиваем минимальную высоту для компенсации системных панелей */
+    min-height: calc(100vh + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Для устройств с очень маленьким экраном */
+@media (max-width: 375px) {
+  html, body {
+    /* Дополнительная защита от перекрытия контента */
+    min-height: calc(100vh + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Для iPad в портретной ориентации */
+@media (max-width: 768px) and (orientation: portrait) {
+  html, body {
+    min-height: calc(100vh + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Для iPad в ландшафтной ориентации */
+@media (max-width: 1024px) and (orientation: landscape) {
+  html, body {
+    min-height: calc(100vh + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Фикс для iOS Safari - предотвращение масштабирования при фокусировке на input */
+input, textarea, select {
+  font-size: 16px; /* Минимальный размер шрифта для предотвращения масштабирования */
+}
+
+/* Фикс для iOS Safari - предотвращение прыжков при изменении высоты viewport */
+@media screen and (orientation: landscape) {
+  body {
+    /* Дополнительная защита для ландшафтной ориентации */
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Для устройств с Dynamic Island - дополнительные стили */
+@media screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3),
+       screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) {
+  /* iPhone 14 Pro и iPhone 14 Pro Max */
+  :root {
+    --dynamic-island-height: 59px; /* Высота Dynamic Island */
+  }
+}
+
+/* Для устройств без Dynamic Island, но с вырезом */
+@media screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3),
+       screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
+  /* iPhone 13 Pro и iPhone 13 Pro Max */
+  :root {
+    --notch-height: 47px; /* Высота выреза */
+  }
+}
+
+/* Общие стили для контента, чтобы избежать перекрытия системными элементами */
+.content-wrapper {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Фикс для фиксированных элементов */
+.fixed-top {
+  top: env(safe-area-inset-top, 0px);
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.fixed-bottom {
+  bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Для элементов, которые не должны перекрываться системными панелями */
+.safe-area-top {
+  margin-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-area-bottom {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-area-left {
+  margin-left: env(safe-area-inset-left, 0px);
+}
+
+.safe-area-right {
+  margin-right: env(safe-area-inset-right, 0px);
 }
