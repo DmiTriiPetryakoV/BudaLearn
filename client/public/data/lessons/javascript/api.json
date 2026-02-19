@@ -1,0 +1,25 @@
+{
+  "slug": "api-work",
+  "title": "Работа с API в JavaScript",
+  "description": "Изучите методы взаимодействия с внешними API, обработку HTTP-запросов и работу с данными",
+  "difficulty": "intermediate",
+  "duration": 40,
+  "time":14,
+  "theory": "## Что такое API?\n\nAPI (Application Programming Interface) — это интерфейс для взаимодействия программ.\n\n## Основные концепции\n\n### HTTP-методы\nGET, POST, PUT, PATCH, DELETE.\n\n### Коды состояния\n2xx — успех, 4xx — ошибка клиента, 5xx — ошибка сервера.\n\n## Типы API\n\n### REST API\nРаспространенный стиль на основе HTTP.\n\n### GraphQL\nСовременный подход с гибкими запросами.\n\n## Fetch API\n\nСтандарт для HTTP-запросов в браузере.\n\n### Пример GET\n```javascript\nfetch('https://api.example.com/data')\n  .then(response => response.json())\n  .then(data => console.log(data));\n```\n\n### Пример POST\n```javascript\nfetch('https://api.example.com/users', {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ name: 'John' })\n});\n```\n\n## Параметры запросов\n\n### Query параметры\n```javascript\nconst url = new URL('https://api.example.com/search');\nurl.searchParams.append('q', 'query');\n```\n\n## Заголовки\n\nContent-Type, Authorization, Accept.\n\n## Аутентификация\n\n### API Keys\nПростой ключ в параметрах.\n\n### Bearer Token\nТокен в заголовке Authorization.\n\n### OAuth 2.0\nСтандарт для делегированного доступа.\n\n## CORS\n\nБезопасность кросс-доменных запросов.\n\n## Обработка ошибок\n\n### Сетевые ошибки\nПроблемы соединения.\n\n### HTTP ошибки\n4xx и 5xx коды.\n\n## Оптимизация\n\n### Кэширование\nСохранение результатов запросов.\n\n### Пагинация\nРазбиение данных на страницы.\n\n## Безопасность\n\nHTTPS, валидация данных, ограничение прав.\n\n## Инструменты\n\nPostman, DevTools, логирование.\n\n## Заключение\n\nAPI — ключевой навык разработчика. Важно понимать HTTP, безопасность и оптимизацию.",
+  
+  "points": [
+    "Основы API и HTTP",
+    "Fetch API и методы",
+    "Параметры и заголовки",
+    "Аутентификация",
+    "CORS и безопасность",
+    "Обработка ошибок",
+    "Оптимизация запросов",
+    "Инструменты разработки"
+  ],
+  
+  "lesson": {
+    "slug": "testing",
+    "title": "Тестирование JavaScript"
+  }
+}
