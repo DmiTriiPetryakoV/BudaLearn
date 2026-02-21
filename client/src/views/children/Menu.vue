@@ -1,5 +1,5 @@
 <template>
-  <div v-if="menuStore.menu" class="menu">
+
 
     <div class="menu-content">
       <nav class="nav-box">
@@ -16,7 +16,6 @@
 
       </nav>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -37,11 +36,13 @@ const links = [
   { id: 'html', name: 'HTML', route: '/html' },
   { id: 'css', name: 'CSS', route: '/css' },
   { id: 'js', name: 'JavaScript', route: '/javascript' },
-   { id: 'Home', name: 'Home', route: '/' },
+  { id: 'Home', name: 'Home', route: '/' },
   { id: 'Закладки', name: 'Закладки', route: '/fake' },
-   { id: 'Profile', name: 'Профиль', route: '/fake' },
-    { id: 'Page', name: 'О нас', route: '/fake' },
-        { id: 'Registration', name: 'Регистрация', route: '/registration' },
+  { id: 'Profile', name: 'Профиль', route: '/profile' },
+  { id: 'Progress', name: 'Прогресс', route: '/progress' },
+  { id: 'Registration', name: 'Регистрация', route: '/registration' },
+  { id: 'Page', name: 'О нас', route: '/infosait' },
+
 
   ]
 
@@ -59,28 +60,6 @@ watch(() => route.path , (newPath) => {
 },{immediate:true})
 
 
-const visible = ref(false)
-let time = null 
-
-function showModal(){
-  if(time){
-    clearTimeout(time)
-    time = null
-  }
-
-visible.value = true
-time = setTimeout(() => {
-  visible.value = false
-},3000)
-}
-function closeModal() {
-  visible.value = false
-  if (timeoutId) {
-    clearTimeout(timeoutId)
-    timeoutId = null
-  }
-}
-
 </script>
 
 <style scoped>
@@ -88,11 +67,11 @@ function closeModal() {
   width:100%;
   height:90vh;
   display:flex;
-  justify-content:flex-start;
+  justify-content:center;
   align-items:center;
   flex-direction:column;
   font-size:1.6rem;
-  gap:2rem;
+  gap:1.2rem;
 }
 
 .menu-link {
@@ -117,16 +96,53 @@ function closeModal() {
   color: white;
 }
 .nav-box{
+  width:50vw;
   height:auto;
-  display:grid;
-  flex-direction:column;
-  gap:5rem;
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction:row;
+  gap:4rem;
   justify-content:center;
   justify-items:center;
   overflow:hidden;
   padding:2rem;
-  grid-template-columns:repeat(2,1fr);
+
+}
+@media (max-width:1150px) {
+    .nav-box{
+      width:70vw;
+    }
+}
+@media (max-width:768px) {
+    .nav-box{
+      width:90vw;
+      gap:2rem;
+    }
+}
+@media (max-width: 768px) {
+  .nav-box {
+    width: 90vw;
+    gap: 1.2rem;
+  }
+  .menu-link {
+    font-size: 1.4rem;
+    padding: 0.7rem;
+  }
+  .menu-content {
+    font-size: 1.2rem;
+    gap: 0.8rem;
+  }
 }
 
-
+@media (max-width: 431px) {
+  .nav-box {
+    width: 95vw;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+  .menu-link {
+    font-size: 1.2rem;
+    padding: 0.6rem;
+  }
+}
 </style>

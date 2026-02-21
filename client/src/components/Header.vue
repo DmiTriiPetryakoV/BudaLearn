@@ -2,7 +2,7 @@
   <header class="main-header">
     <h1 class="name-product">BudaLearn</h1>
 
-    <input placeholder="Найти урок" class="searchInput" type="text" maxlength="50"/>
+    <input placeholder="Найти урок" class="searchInput" type="text" maxlength="50" @click="fake()" v-model="input"/>
 
     <nav class="box-nav">
     <router-link
@@ -29,7 +29,7 @@ import { useNameTechnology , useMenu } from '@/store/nameTechnology'
 import { useRouter } from 'vue-router'
 const techStore = useNameTechnology()
 const router = useRouter()
-
+const emit = defineEmits(['toggle'])
 const menuRes = useMenu()
 const SetTech = (tech) => {
         techStore.name = tech
@@ -56,7 +56,16 @@ watch(() => router.currentRoute.value.path , (newPath) =>{
   menuRes.menu = isOpen 
 },{immediate:true})
 
-const emit = defineEmits(['toggle'])
+
+
+const input = ref('')
+
+const fake  = () => {
+  input.value = 'Скоро'
+}
+
+
+
 </script>
 
 

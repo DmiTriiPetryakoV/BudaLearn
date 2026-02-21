@@ -11,6 +11,26 @@ const routes = [
   name:'registration',
   component:() => import('../views/Auth.vue')
   },
+  {
+    path:"/infoSait",
+    name:'info',
+    component:() => import('../views/InfoSait.vue')
+  },
+    {
+    path:"/progress",
+    name:'progress',
+    component:() => import('../views/Progress.vue')
+  },
+  {
+    path:"/profile",
+    name:'profile',
+    component:() => import('../views/Profile.vue')
+  },
+  {
+  path:"/Success",
+  name:"Success",
+  component:() => import('../views/Success.vue')
+  },
   { 
     path:'/fake',
     name:'fake',

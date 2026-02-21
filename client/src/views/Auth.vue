@@ -1,7 +1,7 @@
 <template>
   <div class="box-auth">
-    <form action="/обработчик" method="POST" class="formData">
-      <h1 class="welcomeAuth">Авторизация</h1>
+    <form @submit.prevent="handleLogin" method="POST" class="formData">
+      <h1 class="welcomeAuth">Регистрация</h1>
       
       <div class="box-input">
         <label for="email">Gmail:</label>
@@ -17,10 +17,11 @@
         <input type="checkbox" id="remember" name="remember"/>
         <label for="remember">Запомнить меня</label>
       </div>
-      
+        <h1 class="success">{{message}}</h1>
       <div class="boxBtn">
         <button type="submit" class="btnSub" :disabled="!isTrue">Отправить</button>
-        <p class="message">Нет аккаунта? <strong class="accent">Зарегистрироваться!</strong></p>
+        <p class="message">Есть аккаунт? <strong class="accent">Войти!</strong></p>
+        <i class="fas fa-terminal info-icon"></i>
       </div>
     </form>
   </div>
@@ -29,7 +30,31 @@
 
 <script setup>
 
+const message = ref('Вы успешно Зарегистрировались!')
+
+
 import {ref , computed} from 'vue'
+import { authApi } from '../services/loginapi'
+import { useRouter } from 'vue-router'
+const router = useRouter() 
+
+const handleLogin = async() => {
+  const data = await authApi.registration(email.value , password.value)
+  
+  
+  
+  if(data){
+    message.value = 'Вы успешно Зарегистрировались!'
+    setTimeout(() => {
+          router.push('/')
+    },3000)
+  }
+}
+
+
+
+
+
 
 const email = ref('')
 const password = ref('')
@@ -67,13 +92,13 @@ const isTrue = computed(() => {
   max-height: 80vh;
   min-height: 70vh;
   background: var(--Surface);
-
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center; 
-  align-items: stretch;    
-  gap: 2rem;              
+  align-items: stretch;  
+  text-align:center;  
+  gap: 1.5rem;              
   padding: 4rem;
   color: var(--Text);
   border-radius: 20px;
@@ -82,7 +107,6 @@ const isTrue = computed(() => {
 
 .welcomeAuth {
   text-align: center;
-  margin-bottom: 1rem;
   font-size: 2.2rem;
   width: 100%;             
 }
@@ -152,7 +176,7 @@ const isTrue = computed(() => {
   align-items: stretch;    
   gap: 1.5rem;
   margin-top: 1rem;
-  cursor:no-drop;
+
 }
 .btnSub:disabled {
   opacity: 0.3;
@@ -175,6 +199,13 @@ const isTrue = computed(() => {
 
 .btnSub:hover {
   border: 2px solid var(--Primary-Hover);
+}
+.success{
+  font-size:1.8rem;
+  font-weight:700;
+  color:var(--Text); 
+  margin:0;
+  padding:0;
 }
 .message {
   width: 100%;
@@ -222,5 +253,33 @@ const isTrue = computed(() => {
   font-size:2rem;
   margin:0;
 }
+}
+@media (max-width: 768px) {
+  .formData {
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+  .success {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 431px) {
+  .formData {
+    padding: 1.5rem;
+    gap: 1.5rem;
+    min-width: 85%;
+    min-height: 50%;
+  }
+  .btnSub {
+    padding: 1rem;
+  }
+  .welcomeAuth {
+    font-size: 2rem;
+    margin: 0;
+  }
+  .success {
+    font-size: 1.1rem;  /* меньше на маленьких экранах */
+  }
 }
 </style>

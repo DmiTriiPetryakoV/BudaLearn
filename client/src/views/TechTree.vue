@@ -116,14 +116,8 @@ function drawArrow(ctx, canvasWidth, canvasHeight, offsets) {
                   .getPropertyValue('--Primary').trim()
 
   // градиент
-  const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight)
-  gradient.addColorStop(0, 'rgba(255,255,255,0)')
-  gradient.addColorStop(0.5, primary)
-  gradient.addColorStop(1, 'rgba(255,255,255,0.4)')
 
-  // свечение
-  ctx.shadowColor = primary
-  ctx.shadowBlur = 8
+
 
   ctx.beginPath()
   ctx.moveTo(startX, 0)
@@ -133,13 +127,11 @@ function drawArrow(ctx, canvasWidth, canvasHeight, offsets) {
     endX, canvasHeight
   )
 
-  ctx.strokeStyle = gradient
+  ctx.strokeStyle = primary
   ctx.lineWidth = 1.5
   ctx.lineCap = 'round'
   ctx.lineJoin = 'round'
   ctx.stroke()
-
-  ctx.shadowBlur = 0
 }
 
 onMounted(() => {

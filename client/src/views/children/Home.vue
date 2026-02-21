@@ -151,7 +151,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import api from '@/api'
+
 const name = ref('BudaLearn')
 const message = ref('Добро пожаловать в ')
 const floatingElements = ref([])
@@ -217,21 +217,13 @@ const scrollToTop = () => {
 
 const server = ref('time message backend')
 
-const testBackend = async() => {
-  try{
-    const response = await api.get('/test')
-    server.value = response.data.message
-    console.log('hello world')
-  }catch(error){
-    console.log(error)
-  }
-}
+
 
 
 onMounted(() => {
   createFloatingElements()
   createTechElements()
-    testBackend()
+
 })
 </script>
 
