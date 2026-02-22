@@ -1,12 +1,8 @@
 <template>
   <div class="box-profile">
     <div class="card-profile">
-
-      <!-- Background decoration -->
       <div class="card-glow"></div>
       <div class="card-grid"></div>
-
-      <!-- Avatar -->
       <div class="avatar-wrapper">
         <div class="avatar-ring"></div>
         <div class="avatar">
@@ -17,22 +13,18 @@
         </div>
         <div class="avatar-status"></div>
       </div>
-
-      <!-- User info -->
       <div class="user-info">
-        <h1 class="user-name">{{ userName }}</h1>
+        <h1 class="user-name">{{ useStore.user?.username }}</h1>
         <p class="user-role">{{ userRole }}</p>
       </div>
-
-      <!-- Stats row -->
       <div class="stats-row">
         <div class="stat-item">
-          <span class="stat-value">{{ stek.length }}</span>
+          <span class="stat-value">Стек</span>
           <span class="stat-label">Технологий</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <span class="stat-value">{{ grade }}</span>
+          <span class="stat-value">{{ useStore.user?.grade }}</span>
           <span class="stat-label">Грейд</span>
         </div>
         <div class="stat-divider"></div>
@@ -41,8 +33,6 @@
           <span class="stat-label">На сайте с</span>
         </div>
       </div>
-
-      <!-- Technologies -->
       <div class="section">
         <h2 class="section-title">
           <span class="section-line"></span>
@@ -50,57 +40,61 @@
           <span class="section-line"></span>
         </h2>
         <div class="technology">
-          <span
-            class="tech"
-            v-for="(tech, index) in stek"
-            :key="index"
-            :style="{ animationDelay: `${index * 60}ms` }"
-          >
-            {{ tech }}
-          </span>
+            <span
+              class="tech"
+              v-for="(tech, index) in stek"
+              :key="index"
+              :style="{ animationDelay: `${index * 60}ms` }"
+              >
+              {{ tech }}
+            </span>
         </div>
       </div>
-
-      <!-- Footer icon -->
       <div class="footer-icon">
         <i class="fas fa-terminal"></i>
         <span>dev profile</span>
       </div>
+
 
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useUserStore } from '../store/nameTechnology'
 
-const userName = ref('Admin')
-const userRole = ref('Full-Stack Developer')
-const grade  = ref('Middle')
-const since  = ref('2023')
+const useStore = useUserStore()
 
-const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
+const since = ref('2026')
+const userRole = ref('BudaLearn')
+
+const stek = computed(() => useStore.user?.stack || [])
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap');
 
+
+
 .box-profile {
-  width: 100vw;
-  height: 90vh;
+  width: 100%;
+  min-height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: var(--Background, #0d0f14);
   font-family: 'Syne', sans-serif;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .card-profile {
   position: relative;
-  width: min(580px, 90vw);
-  padding: 4rem 3.5rem 3.5rem;
+  width: min(580px, 100%);
+  padding: clamp(2rem, 8vw, 4rem) clamp(1.5rem, 5vw, 3.5rem) clamp(2rem, 6vw, 3.5rem);
   background: var(--Surface, #161921);
-  border-radius: 24px;
+  border-radius: clamp(20px, 4vw, 24px);
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.04),
@@ -109,7 +103,7 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: clamp(1rem, 3vw, 1.5rem);
   overflow: hidden;
   animation: cardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -118,12 +112,13 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   from { opacity: 0; transform: translateY(24px) scale(0.97); }
   to   { opacity: 1; transform: none; }
 }
+
 .card-glow {
   position: absolute;
   top: -60px;
   left: 50%;
   translate: -50% 0;
-  width: 260px;
+  width: min(260px, 80%);
   height: 260px;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, transparent 70%);
   pointer-events: none;
@@ -135,12 +130,12 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   background-image:
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-size: clamp(24px, 5vw, 32px) clamp(24px, 5vw, 32px);
   pointer-events: none;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%);
 }
 
-/* ── Avatar ──────────────────────────────────────── */
+/* Avatar */
 .avatar-wrapper {
   position: relative;
   margin-top: 0.5rem;
@@ -160,8 +155,8 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
 
 .avatar {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: clamp(60px, 12vw, 72px);
+  height: clamp(60px, 12vw, 72px);
   border-radius: 50%;
   background: var(--Surface, #161921);
   border: 3px solid var(--Surface, #161921);
@@ -173,16 +168,16 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
 }
 
 .avatar svg {
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 7vw, 40px);
+  height: clamp(32px, 7vw, 40px);
 }
 
 .avatar-status {
   position: absolute;
   bottom: 4px;
   right: 4px;
-  width: 14px;
-  height: 14px;
+  width: clamp(10px, 2.5vw, 14px);
+  height: clamp(10px, 2.5vw, 14px);
   border-radius: 50%;
   background: #22c55e;
   border: 2px solid var(--Surface, #161921);
@@ -190,23 +185,24 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   box-shadow: 0 0 8px #22c55e;
 }
 
-/* ── User info ───────────────────────────────────── */
+/* User info */
 .user-info {
   text-align: center;
 }
 
 .user-name {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
   font-weight: 800;
   color: var(--Text, #f1f5f9);
   letter-spacing: -0.02em;
   line-height: 1.1;
+  word-break: break-word;
 }
 
 .user-role {
   margin: 0.3rem 0 0;
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 2vw, 0.8rem);
   font-weight: 600;
   color: #6366f1;
   letter-spacing: 0.12em;
@@ -214,15 +210,18 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   font-family: 'JetBrains Mono', monospace;
 }
 
+/* Stats row */
 .stats-row {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1rem 1.5rem;
+  justify-content: space-between;
+  gap: clamp(0.8rem, 3vw, 1.5rem);
+  padding: clamp(0.8rem, 2.5vw, 1rem) clamp(1rem, 3vw, 1.5rem);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 14px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .stat-item {
@@ -231,29 +230,36 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   align-items: center;
   flex: 1;
   gap: 0.2rem;
+  min-width: 0;
 }
 
 .stat-value {
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
   font-weight: 700;
   color: var(--Text, #f1f5f9);
   font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .stat-label {
-  font-size: 0.65rem;
+  font-size: clamp(0.55rem, 1.8vw, 0.65rem);
   color: rgba(255,255,255,0.35);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
 .stat-divider {
   width: 1px;
-  height: 32px;
+  height: clamp(24px, 6vw, 32px);
   background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
 }
 
-
+/* Section */
 .section {
   width: 100%;
 }
@@ -262,12 +268,12 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 0.7rem;
+  font-size: clamp(0.6rem, 2vw, 0.7rem);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  margin: 0 0 1rem;
+  margin: 0 0 clamp(0.8rem, 2.5vw, 1rem);
   font-family: 'JetBrains Mono', monospace;
 }
 
@@ -277,6 +283,7 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   background: rgba(255, 255, 255, 0.07);
 }
 
+/* Technologies */
 .technology {
   display: flex;
   flex-wrap: wrap;
@@ -285,8 +292,8 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
 }
 
 .tech {
-  padding: 0.35rem 0.85rem;
-  font-size: 0.72rem;
+  padding: 0.35rem clamp(0.6rem, 2vw, 0.85rem);
+  font-size: clamp(0.65rem, 2vw, 0.72rem);
   font-weight: 600;
   font-family: 'JetBrains Mono', monospace;
   border-radius: 100px;
@@ -296,6 +303,7 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   transition: all 0.2s ease;
   animation: tagIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
   cursor: default;
+  white-space: nowrap;
 }
 
 @keyframes tagIn {
@@ -311,18 +319,103 @@ const stek = ref(['PHP', 'Vue', 'Python', 'JS', 'Node', 'HTML', 'CSS'])
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
+/* Footer */
 .footer-icon {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.65rem;
+  font-size: clamp(0.55rem, 1.8vw, 0.65rem);
   color: rgba(255,255,255,0.2);
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.1em;
+  margin-top: clamp(0.5rem, 2vw, 1rem);
 }
 
 .footer-icon i {
-  font-size: 0.75rem;
+  font-size: clamp(0.65rem, 2vw, 0.75rem);
   color: #6366f1;
+}
+
+/* Специфические адаптации для мобильных устройств */
+@media (max-width: 480px) {
+  .stats-row {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .stat-divider {
+    display: none;
+  }
+  
+  .stat-item {
+    min-width: calc(33.33% - 0.5rem);
+  }
+  
+  .technology {
+    gap: 0.4rem;
+  }
+  
+  .tech {
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 360px) {
+  .stats-row {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .stat-item {
+    width: 100%;
+  }
+  
+  .stat-value, .stat-label {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 280px) {
+  .card-profile {
+    padding: 1.5rem 1rem;
+  }
+  
+  .tech {
+    width: 100%;
+    white-space: normal;
+  }
+}
+
+/* Для планшетов */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .card-profile {
+    width: min(520px, 90%);
+  }
+}
+
+/* Альбомная ориентация на телефонах */
+@media (max-height: 600px) and (orientation: landscape) {
+  .box-profile {
+    min-height: auto;
+    padding: 2rem 1rem;
+  }
+  
+  .card-profile {
+    padding: 2rem;
+    gap: 1rem;
+  }
+  
+  .avatar-wrapper {
+    margin-top: 0;
+  }
+  
+  .stats-row {
+    padding: 0.8rem 1rem;
+  }
 }
 </style>

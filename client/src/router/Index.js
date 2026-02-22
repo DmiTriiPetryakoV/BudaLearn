@@ -12,6 +12,11 @@ const routes = [
   component:() => import('../views/Auth.vue')
   },
   {
+  path:'/Login',
+  name:'Login',
+  component:() => import('../views/Login.vue')  
+  },
+  {
     path:"/infoSait",
     name:'info',
     component:() => import('../views/InfoSait.vue')
@@ -25,11 +30,6 @@ const routes = [
     path:"/profile",
     name:'profile',
     component:() => import('../views/Profile.vue')
-  },
-  {
-  path:"/Success",
-  name:"Success",
-  component:() => import('../views/Success.vue')
   },
   { 
     path:'/fake',

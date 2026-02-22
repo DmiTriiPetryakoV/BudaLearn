@@ -29,12 +29,12 @@ new Chart(ctx, {
     backgroundColor: primary,
 datasets: [
   {
-    label: 'HTML & CSS',
+    label: 'HTML',
     data: [1, 3, 5, 7, 10, 12, 15],
     borderColor: '#10B981',
     backgroundColor: 'transparent',
-    borderWidth: 3,
-    pointRadius: 5,
+    borderWidth: 1.5,
+    pointRadius: 3.5,
     pointBackgroundColor: '#10B981',
     tension: 0.1,
   },
@@ -43,18 +43,18 @@ datasets: [
     data: [1, 2, 4, 5, 7, 9, 11],
     borderColor: '#F59E0B',
     backgroundColor: 'transparent',
-    borderWidth: 3,
-    pointRadius: 5,
+    borderWidth: 1.5,
+    pointRadius: 3.5,
     pointBackgroundColor: '#F59E0B',
     tension: 0.1,
   },
   {
-    label: 'Node.js',
+    label: 'CSS',
     data: [0, 1, 2, 3, 4, 6, 8],
     borderColor: '#3B82F6',
     backgroundColor: 'transparent',
-    borderWidth: 3,
-    pointRadius: 5,
+    borderWidth: 1.5,
+    pointRadius: 3.5,
     pointBackgroundColor: '#3B82F6',
     tension: 0.1,
   }
@@ -62,6 +62,7 @@ datasets: [
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
 plugins: {
   legend: {
     display: true,
@@ -96,7 +97,7 @@ plugins: {
     padding:1.5rem;
 }
 .canvas{
-    max-width:65vw;
+    max-width:100% !important;
     max-height:75vh;
     min-height:70vh;
 }

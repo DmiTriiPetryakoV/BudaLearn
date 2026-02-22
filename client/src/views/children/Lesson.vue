@@ -43,6 +43,9 @@
     <button class="btn-heigth" @click="goTop()">
       <i :class="isBotBtn ? 'fas fa-arrow-down' : 'fas fa-arrow-up'"></i>
     </button>
+    <button class="saveSlug">
+        <i :class="isSaved ? 'fas fa-bookmark' : 'far fa-bookmark'"></i>
+    </button>
   </div>
 </template>
 
@@ -397,6 +400,26 @@ watch(() => route.path, () => {
 .error button:hover {
   opacity: 0.9;
 }
+.saveSlug{
+  padding: 1.2rem;
+  width:4rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--Primary);
+  font-size: 1.5rem;
+  color: var(--Text);
+  position:fixed;
+  bottom: 20px;  
+  z-index:9999;
+  margin-left:20px;
+  left:0;
+  cursor:pointer;
+  transition:0.3s ease all;
+}
+.saveSlug:hover{
+  transform:rotate(180deg) scale(1.05);
+}
+
 </style>
 
 <style>
