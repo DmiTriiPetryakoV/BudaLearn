@@ -63,45 +63,44 @@
 }
 
 .light-theme {
-  /* Основные цвета - светлая тема */
-  --Primary: #7C3AED;
-  --Primary-Hover: #8B5CF6;
-  --Secondary: #059669;
-  --Secondary-Hover: #10B981;
+  /* Основные цвета */
+  --Primary: #0EA5E9;
+  --Primary-Hover: #38BDF8;
+  --Secondary: #10B981;
+  --Secondary-Hover: #34D399;
   
   /* Фоны и поверхности */
-  --Background: #F8FAFC;
+  --Background: #F0F7FF;
   --Surface: #FFFFFF;
-  --Surface-Light: #F1F5F9;
-  --Surface-Dark: #E2E8F0;
+  --Surface-Light: #E8F4FD;
+  --Surface-Dark: #DBEAFE;
   
   /* Текст */
-  --Text: #1E293B;
-  --Text-Secondary: #64748B;
+  --Text: #0F172A;
+  --Text-Secondary: #475569;
   --Text-Tertiary: #94A3B8;
   
   /* Границы */
-  --Border: #E2E8F0;
-  --Border-Hover: #CBD5E1;
+  --Border: #BAE6FD;
+  --Border-Hover: #7DD3FC;
   
   /* Градиенты */
-  --Gradient-Primary: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
-  --Gradient-Secondary: linear-gradient(135deg, #059669 0%, #0D9488 100%);
-  --Gradient-Background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-  --Gradient-Surface: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
+  --Gradient-Primary: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  --Gradient-Secondary: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --Gradient-Background: linear-gradient(135deg, #F0F7FF 0%, #E8F4FD 100%);
+  --Gradient-Surface: linear-gradient(145deg, #FFFFFF 0%, #F0F9FF 100%);
   
   /* Тени */
-  --Shadow-Small: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --Shadow-Medium: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --Shadow-Large: 0 16px 48px rgba(0, 0, 0, 0.16);
-  --Shadow-Glow: 0 0 20px rgba(124, 58, 237, 0.15);
+  --Shadow-Small: 0 2px 8px rgba(14, 165, 233, 0.08);
+  --Shadow-Medium: 0 8px 24px rgba(14, 165, 233, 0.12);
+  --Shadow-Large: 0 16px 48px rgba(14, 165, 233, 0.16);
+  --Shadow-Glow: 0 0 20px rgba(14, 165, 233, 0.2);
   
   /* Глубина */
-  --Elevation-1: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --Elevation-2: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --Elevation-3: 0 12px 24px rgba(0, 0, 0, 0.12);
+  --Elevation-1: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --Elevation-2: 0 4px 12px rgba(14, 165, 233, 0.08);
+  --Elevation-3: 0 12px 24px rgba(14, 165, 233, 0.12);
 }
-
 /* Исправлено: убраны паддинги с body/html */
 body, html {
   width: 100%;

@@ -43,8 +43,8 @@
     <button class="btn-heigth" @click="goTop()">
       <i :class="isBotBtn ? 'fas fa-arrow-down' : 'fas fa-arrow-up'"></i>
     </button>
-    <button class="saveSlug">
-        <i :class="isSaved ? 'fas fa-bookmark' : 'far fa-bookmark'"></i>
+    <button class="saveSlug" @click="saveProgress">
+         <i :class="isSaved ? 'fas fa-bookmark' : 'far fa-bookmark'"></i>
     </button>
   </div>
 </template>
@@ -54,10 +54,11 @@ import { ref, onMounted, watch, computed, onUnmounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { lessonsApi } from '../../services/lessonsApi'
 import { useNameTechnology } from '@/store/nameTechnology'
+import {progressApi} from '../../services/progressApi'
+import {useUserStore} from '@/store/nameTechnology'
 
-
-
-
+const userStore = useUserStore()
+const isSaved = ref(false)
 const route = useRoute()
 const router = useRouter()
 const data = ref(null)
@@ -66,7 +67,17 @@ const error = ref(null)
 const nextLesson = ref(true)
 const isBotBtn = ref(false)
 
-const time = ref(15)
+const saveProgress = async() => {
+  console.log('ok')
+  const slug = route.path.split(' ').pop()
+  const tech = technology.value.toLowerCase()
+  console.log('отправляем:', { tech, slug, token: userStore.accessToken })
+  await progressApi.save(tech , slug , userStore.accessToken)
+  isSaved.value = true
+}
+
+
+
 
 const technology = computed(() => {
   const path = route.path

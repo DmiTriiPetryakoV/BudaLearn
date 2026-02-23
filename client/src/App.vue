@@ -12,27 +12,28 @@
 </template>
 <script setup>
 
+import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
-
+import { useRouter, useRoute } from 'vue-router'
+import { useNameTechnology, useTheme } from '@/store/nameTechnology'
 import Home from './views/children/Home.vue'
-
-import { useNameTechnology } from '@/store/nameTechnology'
 import Menu from './views/children/Menu.vue'
-
-const techStore = useNameTechnology()
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import { watch } from 'vue'
-const {name} = storeToRefs(techStore)
-import {useRouter , useRoute} from 'vue-router'
-const router =  useRouter()
+
+const techStore = useNameTechnology()
+const useThemes = useTheme()
+const { name } = storeToRefs(techStore)
+const router = useRouter()
+const route = useRoute()
+// остальной код...
+
 
 
 const setTech = (tech) => {
   console.log('Header: устанавливаю технологию:', tech)
   techStore.name = tech
 }
-const route = useRoute()
 
 const routePath = {
   'HTMLlearn':'HTML',
@@ -47,8 +48,16 @@ watch(() =>  route.name, (newName)  => {
   if(tech){
     techStore.name = tech
 }},{immediate:true}) 
-</script>
 
+watch(() => useThemes.isDark , (isDark) => {
+  if(isDark){
+    document.body.classList.add('light-theme')
+}else{
+  document.body.classList.remove('light-theme')
+}
+},{immediate:true})
+
+</script>
 
 
 <style scoped>

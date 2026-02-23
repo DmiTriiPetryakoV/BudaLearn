@@ -145,7 +145,6 @@ watch(topics ,async () => {
       const ctx = canvas.getContext('2d')
       drawArrow(ctx , canvas.width , canvas.height , arrowOffsets[index] )
     })
-
 })
 
 

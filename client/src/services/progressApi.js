@@ -2,7 +2,7 @@ const API_URL = 'http://localhost:1488/api'
 
 export const progressApi = {
     async save(tech , topicSlug , accessToken){
-        const res = await fetch(`${API_URL}/progress` , {
+        const res = await fetch(`${API_URL}/progress` , { 
             method:'POST',
                        headers: { 
                 'Content-Type': 'application/json',
@@ -11,7 +11,8 @@ export const progressApi = {
             credentials: 'include',
             body: JSON.stringify({ tech, topicSlug })
         })
-        return res.json()
+
+        return res.json() 
     },
     async get(accessToken){
         const res = await fetch(`${API_URL}/progress` , {

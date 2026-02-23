@@ -14,6 +14,16 @@ export const useMenu = defineStore('menu' , () => {
         menu
     }
 })
+export const useTheme = defineStore('theme' , () => {
+    const isDark = ref(false)
+    function toggleTheme(){
+       console.log(isDark.value)
+        isDark.value = !isDark.value;
+        console.log(isDark.value)
+    }
+    return{isDark , toggleTheme}
+} , {persist:true})
+
 
 export const useUserStore = defineStore('user' , () => {
     const accessToken = ref('')

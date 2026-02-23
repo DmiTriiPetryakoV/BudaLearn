@@ -98,8 +98,8 @@ const stek = computed(() => useStore.user?.stack || [])
   border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.04),
-    0 32px 64px rgba(0, 0, 0, 0.5),
-    0 0 80px rgba(99, 102, 241, 0.08);
+    0 16px 32px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(99, 102, 241, 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;

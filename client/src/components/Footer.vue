@@ -24,7 +24,7 @@
 
             <p class="info">Version: {{version}}</p>
             <p class="info">Next Update: {{data}}</p>
-            <p class="info">Временный чуть чуть аишный дизайн.Исправим.</p>
+            <p class="info">Стараемся для вас ☻</p>
         </div>
     </footer>
 </template>
