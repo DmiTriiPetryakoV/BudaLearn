@@ -252,7 +252,7 @@ onMounted(() => {
 
 .code-element {
   position: absolute;
-  color: rgba(255, 255, 255, 0.1);
+  color:var(--Primary);
   font-family: 'Courier New', monospace;
   font-weight: bold;
   animation: float 10s ease-in-out infinite;
@@ -262,12 +262,12 @@ onMounted(() => {
 
 .code-element:nth-child(3n) {
   color: var(--Primary);
-  opacity: 0.15 !important;
+  opacity: 0.45 !important;
 }
 
 .code-element:nth-child(3n+1) {
   color: var(--Primary-Hover);
-  opacity: 0.1 !important;
+  opacity: 0.3 !important;
 }
 
 @keyframes float {

@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref} from 'vue'
+import {lessonsApi} from '../services/lessonsApi'
+
 
 export const useNameTechnology = defineStore('tech', ( ) => {
     const name = ref('')
-    return{
-        name
-    }
-
+    const totalLessons = ref(0)
+    const loadLessons =  async (technology) => {
+    const topics = await lessonsApi.getTopics(technology)
+    totalLessons.value = topics.length
+}
+return {loadLessons , totalLessons , name}
 })
 export const useMenu = defineStore('menu' , () => {
     const menu = ref(false)
@@ -14,6 +18,7 @@ export const useMenu = defineStore('menu' , () => {
         menu
     }
 })
+
 export const useTheme = defineStore('theme' , () => {
     const isDark = ref(false)
     function toggleTheme(){
@@ -38,3 +43,5 @@ export const useUserStore = defineStore('user' , () => {
     }
     return {accessToken , user, setUser , logout}
 },{persist:true})
+
+

@@ -1,8 +1,6 @@
 class ApiLesson {
   constructor() {
     this.cache = new Map()
-    
-    // Определяем автоматически
     this.basePath = this.detectBasePath()
     console.log('📍 Base path:', this.basePath, '(is GitHub:', this.isGitHubPages(), ')')
   }
@@ -12,21 +10,19 @@ class ApiLesson {
   }
 
   detectBasePath() {
-    // Если на GitHub Pages
     if (this.isGitHubPages()) {
-      // Извлекаем имя репозитория из пути
       const path = window.location.pathname
-      // Пример: /BudaLearn/ → /BudaLearn/
       const match = path.match(/^\/([^\/]+)\//)
       return match ? `/${match[1]}/` : '/BudaLearn/'
     }
-    // Для localhost используем import.meta.env.BASE_URL
     return import.meta.env.BASE_URL || '/'
   }
 
   async getLesson(technology, slug) {
     const cacheKey = `${technology}/${slug}`
     
+
+
     if (this.cache.has(cacheKey)) {
       return this.cache.get(cacheKey)
     }

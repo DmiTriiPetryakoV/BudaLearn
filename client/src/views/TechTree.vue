@@ -34,8 +34,9 @@ import { storeToRefs } from 'pinia'
 import { useRouter,useRoute } from 'vue-router'
 import ButtonMain from '../components/ButtonMain.vue'
 import { useNameTechnology } from '@/store/nameTechnology'
+import { useTheme } from '../store/nameTechnology'
 import { lessonsApi } from '../services/lessonsApi'
-
+const useThemes = useTheme()
 const techStore = useNameTechnology()
 const router = useRouter()
 const { name } = storeToRefs(techStore)
@@ -58,7 +59,6 @@ const props = defineProps({
 
 
 const loadTopics = async () => {
-  console.log('🔄 Начинаю загрузку тем...')
   loading.value = true
   error.value = null
   
@@ -80,7 +80,6 @@ const theme = (slug) => {
 }
 watch(() => props.techSlug, (newTech, oldTech) => {
   if (newTech !== oldTech) {
-    console.log(`🔄 Технология изменилась: ${oldTech} → ${newTech}`)
     loadTopics()
   }
 }) 
@@ -112,10 +111,14 @@ function drawArrow(ctx, canvasWidth, canvasHeight, offsets) {
   const bend2 = offsets.bend2
 
   // получаем цвет из CSS
-  const primary = getComputedStyle(document.documentElement)
+  let primary = getComputedStyle(document.documentElement)
                   .getPropertyValue('--Primary').trim()
 
   // градиент
+  if(useThemes.isDark){
+    primary = '#00a6ff'
+
+  }
 
 
 

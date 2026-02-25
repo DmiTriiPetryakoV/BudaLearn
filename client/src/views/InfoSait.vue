@@ -58,7 +58,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref  , onMounted} from 'vue'
+import {lessonsApi} from '../services/lessonsApi'
+import { useNameTechnology } from '../store/nameTechnology'
+const teshStore = useNameTechnology()
+
 
 const techs = ref([
   {
@@ -83,6 +87,16 @@ const techs = ref([
     tags: ['переменные', 'функции', 'DOM', 'события'],
   },
 ])
+onMounted(async () => {
+  const [html, css, js] = await Promise.all([
+    lessonsApi.getTopics('HTML'),
+    lessonsApi.getTopics('CSS'),
+    lessonsApi.getTopics('JavaScript'),
+  ])
+  techs.value[0].lessons = html.length
+  techs.value[1].lessons = css.length
+  techs.value[2].lessons = js.length
+})
 </script>
 
 <style scoped>
