@@ -119,7 +119,7 @@ createChart()
 
 .canvas {
   max-width: 100% !important;
-  max-height: 75vh;
+  max-height: 75.1vh;
   min-height: 70vh;
 }
 
