@@ -4,16 +4,13 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  base: process.env.NODE_ENV === 'production' 
-    ? '/BudaLearn/'  // ⬅️ ЗАМЕНИ НА ИМЯ СВОЕГО РЕПО
-    : '/',
-      server: {
+  base: '/',  // <<< ПРОСТО СЛЭШ
+  server: {
     host: true,
     port: 5175,      
     open: true       
   },
-
-      resolve: {
+  resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
