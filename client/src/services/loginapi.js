@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:1488/api'
+const API_URL = 'https://budalearnbackend2.onrender.com'
 
 
 
@@ -16,7 +16,7 @@ export const authLogin= {
         const res = await fetch(`${API_URL}/profile` , {
                     method: 'GET',
         headers: { 
-            'Authorization': `Bearer ${токен}` 
+            'Authorization': `Bearer ${accessToken}` 
         },
         credentials: 'include'
     })

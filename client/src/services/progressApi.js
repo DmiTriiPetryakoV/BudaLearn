@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:1488/api'
+const API_URL = 'https://budalearnbackend2.onrender.com'
 
 export const progressApi = {
     async save(tech , topicSlug , accessToken){
