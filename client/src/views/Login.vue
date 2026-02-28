@@ -34,7 +34,7 @@
 
 import {ref , computed} from 'vue'
 import { authApi } from '../services/Authapi'
-import { authLogin } from '../services/loginApi'
+import { authLogin } from '../services/loginapi.js'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../store/nameTechnology'
 const userStore = useUserStore()
