@@ -1,5 +1,4 @@
-const API_URL = 'https://budalearnbackend2.onrender.com'
-
+const API_URL = 'https://budalearnbackend2.onrender.com/api'
 export const authApi = {
     async registration(email, password , username , grade , stack) {
         const res = await fetch(`${API_URL}/registration`, {
