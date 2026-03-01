@@ -246,10 +246,11 @@ const stek = computed(() => useStore.user?.stack || [])
 
 .stat-label {
   font-size: clamp(0.55rem, 1.8vw, 0.65rem);
-  color: rgba(255,255,255,0.35);
+  color:var(--Text);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   white-space: nowrap;
+  opacity:0.8;
 }
 
 .stat-divider {

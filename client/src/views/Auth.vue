@@ -68,12 +68,20 @@ const stackInput = ref('')
 const isTrue = computed(() => email.value && password.value.length >= 6)
 
 const handleAuth = async () => {
+  try{
   const stack = stackInput.value.split(',').map(s => s.trim()).filter(Boolean)
   const data = await authApi.registration(email.value, password.value, username.value, grade.value, stack)
-  if (data) {
+  if (data?.accessToken) {
     message.value = 'Письмо отправлено на почту!'
   }
+      else{ message.value = data?.message || 'Ошибка! Подождите 30 секунд чтобы сервер проснулся'
+    }
+  }
+  catch(e){
+    message.value = 'Ошибка подключения к серверу'
+  }
 }
+
 </script>
 
 <style scoped>
@@ -182,6 +190,7 @@ select.data-vvod option {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  transform:none !important;
 }
 
 .btnSub {

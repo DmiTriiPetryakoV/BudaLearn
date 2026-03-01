@@ -40,10 +40,10 @@
         </button>
       </div>
     </div>
-    <button class="btn-heigth" @click="goTop()">
+    <button class="btn-heigth" @click="goTop">
       <i :class="isBotBtn ? 'fas fa-arrow-down' : 'fas fa-arrow-up'"></i>
     </button>
-    <button class="saveSlug" @click="saveProgress">
+    <button class="saveSlug" @click="saveProgress" type="button">
          <i :class="isSaved ? 'fas fa-bookmark' : 'far fa-bookmark'"></i>
     </button>
   </div>
@@ -428,7 +428,7 @@ watch(() => route.path, () => {
   transition:0.3s ease all;
 }
 .saveSlug:hover{
-  transform:rotate(180deg) scale(1.05);
+  transform:scale(1.05);
 }
 
 </style>

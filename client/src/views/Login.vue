@@ -42,13 +42,18 @@ const router = useRouter()
 const message = ref('')
 
 const handleLogin = async() => {
-  const data = await authLogin.login(email.value , password.value)
-  if(data.accessToken){
-    message.value = 'Вы успешно Вошли'
-    console.log('данные из логина:', data)
-    userStore.setUser(data)
-    console.log('стор после setUser:', userStore.user)
-    router.push('/profile')
+  try {
+    const data = await authLogin.login(email.value, password.value)
+    
+    if(data?.accessToken) {
+      message.value = 'Вы успешно Вошли'
+      userStore.setUser(data)
+      router.push('/profile')
+    } else {
+      message.value = data?.message || 'Ошибка! Подождите 30 секунд чтобы сервер проснулся'
+    }
+  } catch(e) {
+    message.value = 'Ошибка подключения к серверу'
   }
 }
 
@@ -230,7 +235,8 @@ const isTrue = computed(() => {
 .box-checkbox,
 .boxBtn {
   width: 100%;
-  max-width: 100%;       
+  max-width: 100%;   
+    transform:none !important;    
 }
 .link{
     text-decoration:none;

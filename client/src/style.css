@@ -110,7 +110,7 @@ body, html {
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
   
-  transition: all 0.3s ease;
+transition: background-color 0.3s ease, color 0.3s ease;
   scroll-behavior: smooth;
   
   /* Оставляем min-height для нормальной работы */
