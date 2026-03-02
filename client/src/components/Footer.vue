@@ -23,7 +23,7 @@
             <p class="copyright">{{ flag }} {{author}}</p>
 
             <p class="info">Version: {{version}}</p>
-            <p class="info">Next Update: {{data}}</p>
+            <p class="info">Next Update: {{update.update}}</p>
             <p class="info">Стараемся для вас ☻</p>
         </div>
     </footer>
@@ -31,13 +31,15 @@
 
 <script setup>
 import { ref } from "vue"
+import {nextUpdate} from '..//store//nameTechnology.js'
+const update = nextUpdate()
 
 const message = ref('Поддержите автора сайта, перейдя по ссылкам выше')
 const year = new Date().getFullYear()
 const author = ref('Buda')
 const flag = ref(`© ${year} BudaLearn. Author:`)
 const version = ref('Beta Test')
-const data = ref('1.03.2026')
+const data = ref('14.03.2026')
 
 </script>
 

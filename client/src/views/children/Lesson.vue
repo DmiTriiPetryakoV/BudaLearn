@@ -67,15 +67,13 @@ const error = ref(null)
 const nextLesson = ref(true)
 const isBotBtn = ref(false)
 
-const saveProgress = async() => {
-  console.log('ok')
-  const slug = route.path.split(' ').pop()
+const slug = computed(() => route.path.split('/').pop())
+
+const saveProgress = async () => {
   const tech = technology.value.toLowerCase()
-  console.log('отправляем:', { tech, slug, token: userStore.accessToken })
-  await progressApi.save(tech , slug , userStore.accessToken)
+  await progressApi.save(tech, slug.value, userStore.accessToken)
   isSaved.value = true
 }
-
 
 
 
@@ -103,15 +101,13 @@ async function GetInfo() {
   data.value = null
   
   try {
-    const slug = route.path.split('/').pop() 
-    
-    if (!slug) {
+    if (!slug.value) {
       throw new Error(`Урок не найден: ${slug}`)
     }
     
-    const next = await nextLessons(technology.value, slug)
+    const next = await nextLessons(technology.value, slug.value)
     nextLesson.value = next
-    const dataJson = await lessonsApi.getLesson(technology.value, slug)
+    const dataJson = await lessonsApi.getLesson(technology.value, slug.value)
     data.value = dataJson
     
     await nextTick()
@@ -194,18 +190,31 @@ function goTop() {
   })
 }
 
-onMounted(() => { 
+onMounted(async () => {
   GetInfo()
   window.addEventListener('scroll', handleScroll)
   handleScroll()
+
+  const slug = route.path.split('/').pop()
+  const progressData = await progressApi.get(userStore.accessToken)
+  const tech = technology.value.toLowerCase()
+  
+  const current = progressData.find(p => p.tech.toLowerCase() === tech)
+  if (current) {
+    isSaved.value = current.completedTopics.includes(slug)
+  }
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
-watch(() => route.path, () => {
+watch(() => route.path,async () => {
   GetInfo()
+    const progressData = await progressApi.get(userStore.accessToken)
+  const tech = technology.value.toLowerCase()
+  const current = progressData.find(p => p.tech.toLowerCase() === tech)
+  isSaved.value = current ? current.completedTopics.includes(slug.value) : false
 })
 </script>
 

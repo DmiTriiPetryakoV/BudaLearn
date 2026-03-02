@@ -5,7 +5,7 @@
                 <i class="fa-solid fa-atom icon-main rotate"></i>
             </div>
             <p class="text-fade">Авторы сайта уже работают над этим разделом</p>
-            <p class="update">Next update : 1.03.2026</p>
+            <p class="update">Next update : {{update.update}}</p>
         </div>
     </div>
 </template>
@@ -86,4 +86,8 @@
 
 </style>
 <script setup>
+
+import {nextUpdate} from '..//store//nameTechnology.js'
+const update = nextUpdate()
+
 </script>

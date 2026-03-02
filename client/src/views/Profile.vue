@@ -51,8 +51,8 @@
         </div>
       </div>
       <div class="footer-icon">
-        <i class="fas fa-terminal"></i>
-        <span>dev profile</span>
+        <i class="fas fa-terminal def"></i>
+        <span class="def">dev profile</span>
       </div>
 
 
@@ -112,7 +112,9 @@ const stek = computed(() => useStore.user?.stack || [])
   from { opacity: 0; transform: translateY(24px) scale(0.97); }
   to   { opacity: 1; transform: none; }
 }
-
+.def{
+  color:var(--Primary);
+}
 .card-glow {
   position: absolute;
   top: -60px;
@@ -145,7 +147,7 @@ const stek = computed(() => useStore.user?.stack || [])
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  background: conic-gradient(from 180deg, #6366f1, #a78bfa, #6366f1);
+  background: conic-gradient(from 180deg, var(--Primary), var(--Primary-Hover), var(--Primary));
   animation: spin 4s linear infinite;
 }
 
@@ -163,7 +165,7 @@ const stek = computed(() => useStore.user?.stack || [])
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #a78bfa;
+  color:var(--Primary);
   z-index: 1;
 }
 
@@ -204,7 +206,7 @@ const stek = computed(() => useStore.user?.stack || [])
   margin: 0.3rem 0 0;
   font-size: clamp(0.65rem, 2vw, 0.8rem);
   font-weight: 600;
-  color: #6366f1;
+  color: var(--Primary);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-family: 'JetBrains Mono', monospace;
@@ -271,7 +273,7 @@ const stek = computed(() => useStore.user?.stack || [])
   gap: 0.75rem;
   font-size: clamp(0.6rem, 2vw, 0.7rem);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.3);
+  color:var(--Text);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin: 0 0 clamp(0.8rem, 2.5vw, 1rem);
@@ -281,7 +283,7 @@ const stek = computed(() => useStore.user?.stack || [])
 .section-line {
   flex: 1;
   height: 1px;
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--Background);
 }
 
 /* Technologies */
@@ -298,8 +300,9 @@ const stek = computed(() => useStore.user?.stack || [])
   font-weight: 600;
   font-family: 'JetBrains Mono', monospace;
   border-radius: 100px;
-  color: #a78bfa;
-  background: rgba(99, 102, 241, 0.1);
+  color:var(--Text);
+  background:var(--Primary);
+  opacity:0.8;
   border: 1px solid rgba(99, 102, 241, 0.25);
   transition: all 0.2s ease;
   animation: tagIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -326,7 +329,6 @@ const stek = computed(() => useStore.user?.stack || [])
   align-items: center;
   gap: 0.5rem;
   font-size: clamp(0.55rem, 1.8vw, 0.65rem);
-  color: rgba(255,255,255,0.2);
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.1em;
   margin-top: clamp(0.5rem, 2vw, 1rem);
@@ -334,7 +336,6 @@ const stek = computed(() => useStore.user?.stack || [])
 
 .footer-icon i {
   font-size: clamp(0.65rem, 2vw, 0.75rem);
-  color: #6366f1;
 }
 
 /* Специфические адаптации для мобильных устройств */

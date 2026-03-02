@@ -44,4 +44,8 @@ export const useUserStore = defineStore('user' , () => {
     return {accessToken , user, setUser , logout}
 },{persist:true})
 
+export const nextUpdate = defineStore('update' , () => {
+    const update = ref('14.01.2026')
+    return {update}
+})
 

@@ -6,17 +6,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted , watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { Chart, registerables } from 'chart.js'
 import { progressApi } from '../services/progressApi'
-import { useUserStore } from '../store/nameTechnology'
-import { useTheme } from '../store/nameTechnology'
-const themeStore = useTheme()
+import { useUserStore, useTheme } from '../store/nameTechnology'
 
 Chart.register(...registerables)
 
 const chartCanvas = ref(null)
+const chartInstance = ref(null)
 const userStore = useUserStore()
+const themeStore = useTheme()
 
 const colors = {
   javascript: '#F59E0B',
@@ -26,50 +26,69 @@ const colors = {
   python: '#EC4899',
 }
 
-onMounted(async () => {
+// Генерируем последние 30 дней
+function getLast30Days() {
+  const days = []
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(d.getDate() - i)
+    d.setHours(0, 0, 0, 0)
+    days.push(d)
+  }
+  return days
+}
+
+function formatLabel(date) {
+  return `${date.getDate()}.${String(date.getMonth() + 1).padStart(2, '0')}`
+}
+
+function isSameDay(a, b) {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  )
+}
+
+async function createChart() {
   const primary = getComputedStyle(document.documentElement)
     .getPropertyValue('--Primary').trim()
 
-  const progressData = await progressApi.get(userStore.accessToken)
+  const isDark = themeStore.isDark
+  const textColor = isDark ? '#000000' : '#8B5CF6'
+  const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.08)'
 
-  const labels = progressData.map(item => item.tech)
+  const progressData = await progressApi.get(userStore.accessToken)
+  const last30 = getLast30Days()
+  const labels = last30.map(formatLabel)
 
   const datasets = progressData.map(item => {
     const color = colors[item.tech.toLowerCase()] || primary
-    const dayCount = [0,0,0,0,0,0,0]
 
-      item.dates.forEach(date => {
-        const d = new Date(date)
-        const now = new Date()
-        
-        const weekStart = new Date(now)
-        weekStart.setDate(now.getDate() - now.getDay() + 1)
-        weekStart.setHours(0,0,0,0)
-        
-        if(d >= weekStart) {
-          let day = d.getDay()
-          day = day === 0 ? 6 : day - 1
-          dayCount[day]++
-      }
+    const dayCounts = last30.map(day => {
+      return item.dates.filter(dateStr => {
+        const d = new Date(dateStr)
+        return isSameDay(d, day)
+      }).length
     })
 
     return {
       label: item.tech,
-      data:dayCount,
+      data: dayCounts,
       borderColor: color,
       backgroundColor: 'transparent',
       borderWidth: 1.5,
-      pointRadius: 3.5,
+      pointRadius: 3,
       pointBackgroundColor: color,
-      tension: 0.1,
+      tension: 0.3,
     }
   })
 
   const ctx = chartCanvas.value.getContext('2d')
 
-  new Chart(ctx, {
+  chartInstance.value = new Chart(ctx, {
     type: 'line',
-    data: { labels: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'], datasets },
+    data: { labels, datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -77,30 +96,51 @@ onMounted(async () => {
         legend: {
           display: true,
           labels: {
-            color: '#ffffff',
+            color: textColor,
             usePointStyle: true,
             pointStyle: 'circle',
             padding: 30,
-          }
-        }
+          },
+        },
+        tooltip: {
+          callbacks: {
+            title: (items) => {
+              const idx = items[0].dataIndex
+              const d = last30[idx]
+              return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })
+            },
+          },
+        },
       },
       scales: {
-        x: { grid: { display: false }, ticks: { color: primary } },
+        x: {
+          grid: { display: false },
+          ticks: {
+            color: primary,
+            maxTicksLimit: 15,
+            maxRotation: 0,
+          },
+        },
         y: {
-          
-          grid: { color: 'rgba(255,255,255,0.05)' },
+          grid: { color: gridColor },
           ticks: { color: primary, stepSize: 1 },
-          beginAtZero: true
-        }
-      }
-    }
+          beginAtZero: true,
+        },
+      },
+    },
   })
+}
+
+onMounted(() => {
+  createChart()
 })
-watch(() => themeStore.isDark , () => {
-  if(chartIntance.value){
-    chartIntance.value.destroy()
+
+watch(() => themeStore.isDark, () => {
+  if (chartInstance.value) {
+    chartInstance.value.destroy()
+    chartInstance.value = null
   }
-createChart()
+  createChart()
 })
 </script>
 
